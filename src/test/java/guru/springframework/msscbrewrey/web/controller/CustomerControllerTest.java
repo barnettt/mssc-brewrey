@@ -76,8 +76,50 @@ class CustomerControllerTest {
     @Test
     void doDelete() throws Exception {
         doNothing().when(customerService).deleteCustomer(any());
-        this.mvc.perform(delete("/api/v1/beer/" + UUID.randomUUID()))
+        this.mvc.perform(delete("/api/v1/customer/" + UUID.randomUUID()))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void expectBadRequestForConstraintViolationExceptionWithBlankName() throws Exception {
+        CustomerDto dto = CustomerDto.builder()
+                .name(" ")
+                .build();
+        String json = mapper.writeValueAsString(dto);
+        UUID uuid = UUID.randomUUID();
+        doNothing().when(customerService).updateCustomer(any());
+
+        this.mvc.perform(post("/api/v1/customer")
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void expectBadRequestForConstraintViolationExceptionWithNameHaving2chars() throws Exception {
+        CustomerDto dto = CustomerDto.builder()
+                .name("Ja")
+                .build();
+        String json = mapper.writeValueAsString(dto);
+        UUID uuid = UUID.randomUUID();
+        this.mvc.perform(put("/api/v1/customer/" + uuid)
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isBadRequest());
+    }
+    @Test
+    void expectBadRequestForConstraintViolationExceptionWithNameGreaterThan100chars() throws Exception {
+        CustomerDto dto = CustomerDto.builder()
+                .name("James Brown II expectBadRequestForConstraintViolationExceptionWithNameGreaterThan100chars expectBadRequestForConstraintViolationExceptionWithNameGreaterThan100chars")
+                .build();
+        String json = mapper.writeValueAsString(dto);
+        UUID uuid = UUID.randomUUID();
+        doNothing().when(customerService).updateCustomer(any());
+
+        this.mvc.perform(put("/api/v1/customer/" + uuid)
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isBadRequest());
     }
 }

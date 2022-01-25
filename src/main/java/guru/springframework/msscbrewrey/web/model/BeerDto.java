@@ -1,11 +1,15 @@
 package guru.springframework.msscbrewrey.web.model;
 
 import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Data
@@ -22,6 +26,15 @@ public class BeerDto {
     private String beerStyle;
     @Positive
     private long upc;
-
+    @Null
+    private OffsetDateTime createdDate;
+    @Null
+    private OffsetDateTime lastModifiedDate;
+    @Null
+    private Integer version;
+    @NotNull
+    private BigDecimal price;
+    private Integer quantityOnHand;
+    private Integer minOnHand;
 
 }
