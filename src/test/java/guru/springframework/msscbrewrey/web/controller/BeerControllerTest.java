@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
@@ -44,6 +45,7 @@ class BeerControllerTest {
         BeerDto dto = BeerDto.builder()
                 .beerName("Heiniken")
                 .beerStyle("Larger")
+                .price(new BigDecimal(2.50))
                 .upc(1220L).build();
 
         String json = mapper.writeValueAsString(dto);
@@ -51,6 +53,7 @@ class BeerControllerTest {
         when(beerService.createBeer(any())).thenReturn(BeerDto.builder()
                 .id(uuid)
                 .beerName("Heiniken")
+                .price(new BigDecimal(2.50))
                 .upc(1220L).build());
 
         this.mvc.perform(post("/api/v1/beer")
@@ -65,6 +68,7 @@ class BeerControllerTest {
     void handlePostConstraintViolation() throws Exception {
         BeerDto dto = BeerDto.builder()
                 .beerName("Heiniken")
+                .price(new BigDecimal(2.50))
                 .upc(1220L).build();
 
         String json = mapper.writeValueAsString(dto);
@@ -83,6 +87,7 @@ class BeerControllerTest {
         BeerDto dto = BeerDto.builder()
                 .beerName("Heiniken")
                 .beerStyle("Larger")
+                .price(new BigDecimal(2.50))
                 .upc(1220L).build();
 
         String json = mapper.writeValueAsString(dto);

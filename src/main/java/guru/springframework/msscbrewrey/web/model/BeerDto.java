@@ -25,6 +25,7 @@ public class BeerDto {
     @NotBlank
     private String beerStyle;
     @Positive
+    @NotNull
     private long upc;
     @Null
     private OffsetDateTime createdDate;
@@ -32,6 +33,7 @@ public class BeerDto {
     private OffsetDateTime lastModifiedDate;
     @Null
     private Integer version;
+    @Positive
     @NotNull
     private BigDecimal price;
     private Integer quantityOnHand;
