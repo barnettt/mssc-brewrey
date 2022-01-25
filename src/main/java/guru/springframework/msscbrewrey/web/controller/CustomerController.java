@@ -30,7 +30,7 @@ public class CustomerController {
     }
 
     @PutMapping({"/{customerId}"})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void handlePut(@PathVariable("customerId") String customerId, @RequestBody CustomerDto customer) {
         customerService.updateCustomer(customer);
     }
